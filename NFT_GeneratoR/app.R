@@ -26,7 +26,11 @@ ui <- fluidPage(
     
     fluidRow(
         column(2, 
-               fileInput(inputId = "file", label = "Upload NFT")),
+               fileInput(inputId = "file", label = "Upload NFT"),
+               textInput(inputId = "owner", label = "Name", placeholder = "e.g. Win Cowger"),
+               actionButton(inputId = "update_ledger", 
+                            label   = "Update Ledger", 
+                            class   = "btn-success")),
         column(10, 
                DT::dataTableOutput(outputId = 'ledger')
         ))
@@ -39,25 +43,7 @@ server <- function(input, output) {
         req(input$file)
         digest(file = as.character(input$file$datapath))
     })
-    
-    observeEvent(input$file, {
-        modalDialog(
-            title = "Owner Name",
-            size = "m",
-            easyClose = TRUE,
-            
-            p("What is the owner's name?"),
-            br(),
-            div(
-                textInput(inputId = "owner", label = "Name", placeholder = "e.g. Win Cowger"),
-                actionButton(inputId = "update_ledger", 
-                             label   = "Update Ledger", 
-                             class   = "btn-success")
-            ),
-            
-            footer = modalButton("Exit")
-        ) %>% showModal()
-    })
+
     
     df <- eventReactive(input$update_ledger, {
         if(input$owner != "" && input$update_ledger > 0){
