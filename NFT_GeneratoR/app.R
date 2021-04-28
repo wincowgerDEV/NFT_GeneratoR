@@ -11,6 +11,7 @@ library(shiny)
 library(digest)
 library(DT)
 library(tidyverse)
+library(shinythemes)
 
 ledger <- tibble(
     Owner = "win",
@@ -27,7 +28,7 @@ ui <- fluidPage(
     fluidRow(
         column(2, 
                fileInput(inputId = "file", label = "Upload NFT"),
-               textInput(inputId = "owner", label = "Name", placeholder = "e.g. Win Cowger"),
+               textInput(inputId = "owner", label = "Owner Name", placeholder = "e.g. Win Cowger"),
                actionButton(inputId = "update_ledger", 
                             label   = "Update Ledger", 
                             class   = "btn-success")),
